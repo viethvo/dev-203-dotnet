@@ -1,0 +1,29 @@
+﻿@model SecurityCoding.Models.SearchTerm
+
+@{
+    ViewBag.Title = "Search customers";
+}
+
+<h2>All customers</h2>
+<br />
+
+@using (Html.BeginForm())
+{
+    <fieldset>
+        <legend>Please enter the exact customer name. You can only see the customer info that you know.</legend>
+
+        <div class="editor-label">
+            Customer Name
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Name)
+        </div>
+        <p>
+            <input type="submit" value="Search" />
+        </p>
+    </fieldset>
+}
+
+<div style="padding-top:20px">
+    @Html.ActionLink("Create Customer", "Create")
+</div>

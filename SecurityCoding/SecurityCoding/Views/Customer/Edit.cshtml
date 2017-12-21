@@ -1,0 +1,68 @@
+﻿@model SecurityCoding.Models.Customer
+
+@{
+    ViewBag.Title = "Edit Customer";
+}
+
+<h2>Edit customer</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.ValidationSummary(true)
+
+    <fieldset>
+        <legend>Customer Detail</legend>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Id)
+        </div>
+        <div class="editor-field">
+            @Html.TextBoxFor(model => model.Id, new Dictionary<string, object> {{ "readonly", "readonly" } })
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Name)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Name)
+            @Html.ValidationMessageFor(model => model.Name)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Adress)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Adress)
+            @Html.ValidationMessageFor(model => model.Adress)
+        </div>
+
+        <div class="editor-label">
+            @Html.LabelFor(model => model.Age)
+        </div>
+        <div class="editor-field">
+            @Html.EditorFor(model => model.Age)
+            @Html.ValidationMessageFor(model => model.Age)
+        </div>
+        <div class="editor-label">
+            Image
+        </div>
+        <div class="editor-field">
+            <img src="/images/@Model.Image" width="100" height="100" />
+            @Html.HiddenFor(model => model.Image)
+        </div>
+        <p style="padding-top:10px">
+            <input type="submit" value="Save" />
+            <p style="color:blue">
+                 @TempData["EditStatus"]
+            </p>
+        </p>
+    </fieldset>
+}
+
+<div>
+    @Html.ActionLink("Back to Search", "ListCustomers")
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
