@@ -24,15 +24,25 @@ There is no restriction on using vulnerability scanning and static code analysis
 Hint 2: 
 
 The following vulnerabilities can be found, they are everywhere, your job is to find and eliminate them. The more the better, the list does not contain everything since there may be some vulnerabilities that the author don’t even know.
+
 Security Misconfiguration (Error Handling Must Setup Custom Error Page)
+
 Cross-Site Request Forgery (CSRF)
+
 Cross-Site Scripting (XSS) attacks
+
 Malicious File Upload.
+
 Version Discloser
+
 SQL Injection Attack.
+
 Sensitive Data Exposure
+
 Audit trail
+
 Broken authentication and session management
+
 Un-validated Redirects and Forwards
 
 ### Fix the security risks 
