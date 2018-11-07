@@ -21,14 +21,27 @@ namespace SecurityCoding.Controllers
         [HttpPost]
         public ActionResult Create(Customer customer, HttpPostedFileBase fileUpload)
         {
+            // validate customer
+            if (!TryValidateModel(customer))
+            {
+                return View();
+            }
+
             var saveFileName = string.Empty;
 
             if (fileUpload != null && fileUpload.ContentLength > 0)
             {
+                // validate file upload
+                if (!IsImage(fileUpload))
+                {
+                    ModelState.AddModelError("File Error", "This file is invalid");
+                    return View();
+                }
+
                 var fileName = fileUpload.FileName;
                 saveFileName = Guid.NewGuid() + fileName;
 
-                using (var fileStream = System.IO.File.Create(Server.MapPath("~/images/" + saveFileName)))
+                using (var fileStream = System.IO.File.Create(Server.MapPath("~/App_Data/images/" + saveFileName)))
                 {
                     fileUpload.InputStream.Seek(0, SeekOrigin.Begin);
                     fileUpload.InputStream.CopyTo(fileStream);
@@ -83,6 +96,18 @@ namespace SecurityCoding.Controllers
             }
 
             return View("AllCustomers", customers);
+        }
+
+        private bool IsImage(HttpPostedFileBase file)
+        {
+            if (file.ContentType.Contains("image"))
+            {
+                return true;
+            }
+
+            string[] formats = new string[] { ".jpg", ".png", ".gif", ".jpeg", ".bmp"};
+
+            return formats.Any(item => file.FileName.EndsWith(item, StringComparison.OrdinalIgnoreCase));
         }
     }
 }
