@@ -14,6 +14,11 @@ namespace SecurityCoding.Controllers
         // GET: Customer/Create
         public ActionResult Create()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
             return View("Create");
         }
 
@@ -79,6 +84,11 @@ namespace SecurityCoding.Controllers
         // GET: Customer
         public ActionResult ListCustomers()
         {
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
             return View("SearchCustomers");
         }
 
