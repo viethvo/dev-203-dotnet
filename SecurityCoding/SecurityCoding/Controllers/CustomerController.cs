@@ -24,6 +24,7 @@ namespace SecurityCoding.Controllers
 
         // POST: Customer/Create
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Create(Customer customer, HttpPostedFileBase fileUpload)
         {
             // validate customer
@@ -71,6 +72,7 @@ namespace SecurityCoding.Controllers
 
         // POST: Customer/Edit/5
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Edit(Customer customer)
         {
             var repository = new CustomerRepository();
@@ -94,6 +96,7 @@ namespace SecurityCoding.Controllers
 
         // GET: Customer
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult ListCustomers(SearchTerm term)
         {
             var repository = new CustomerRepository();
