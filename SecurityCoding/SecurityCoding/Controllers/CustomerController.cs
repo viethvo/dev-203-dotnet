@@ -1,4 +1,5 @@
-﻿using SecurityCoding.Models;
+﻿using Microsoft.AspNet.Identity;
+using SecurityCoding.Models;
 using SecurityCoding.Repository;
 using System;
 using System.Collections.Generic;
@@ -53,12 +54,12 @@ namespace SecurityCoding.Controllers
                     fileUpload.InputStream.CopyTo(fileStream);
                 }
             }
-
             var repository = new CustomerRepository();
             customer.Image = saveFileName;
-            repository.Add(customer);
-            TempData["CreateStatus"] = "Create completed";
+            customer.AccountId = User.Identity.GetUserId();
 
+            var result = repository.Add(customer);
+            TempData["CreateStatus"] = result != null ? "Create completed" : "Create failed";
             return View("Create", customer);
         }
 
@@ -66,7 +67,7 @@ namespace SecurityCoding.Controllers
         public ActionResult Edit(int id = 0)
         {
             var repository = new CustomerRepository();
-            var customer = repository.FindById(id);
+            var customer = repository.FindById(id, User.Identity.GetUserId());
             return View("Edit", customer);
         }
 
@@ -76,10 +77,8 @@ namespace SecurityCoding.Controllers
         public ActionResult Edit(Customer customer)
         {
             var repository = new CustomerRepository();
-            repository.Update(customer);
-
-            TempData["EditStatus"] = "Save completed.";
-
+            var result = repository.Update(customer, User.Identity.GetUserId());
+            TempData["EditStatus"] = result != null ? "Save completed" : "Save failed";
             return View("Edit", customer);
         }
 
@@ -105,7 +104,7 @@ namespace SecurityCoding.Controllers
 
             if (!string.IsNullOrEmpty(term.Name))
             {
-                customers = repository.FindByName(term.Name);
+                customers = repository.FindByName(term.Name, User.Identity.GetUserId());
             }
 
             return View("AllCustomers", customers);

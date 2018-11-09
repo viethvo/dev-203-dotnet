@@ -16,5 +16,6 @@ namespace SecurityCoding.Models
         [Range(1, int.MaxValue, ErrorMessage = "Please enter value bigger than {1}")]
         public int Age { get; set; }
         public string Image { get; set; } = string.Empty;
+        public string AccountId { get; set; }
     }
 }

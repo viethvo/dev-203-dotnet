@@ -3,5 +3,6 @@ CREATE TABLE [dbo].[Customer](
 	[Name] [nvarchar](50) NOT NULL,
 	[Adress] [nvarchar](250) NULL,
 	[Age] [int] NULL,
-	[Image] [nvarchar](150) NULL
+	[Image] [nvarchar](150) NULL,
+	[AccountId] [nvarchar](128) NOT NULL,
 ) ON [PRIMARY]
