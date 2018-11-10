@@ -112,6 +112,15 @@ namespace SecurityCoding.Controllers
                 customers = repository.FindByName(term.Name, User.Identity.GetUserId());
             }
 
+            // decrypt sensitive data
+            foreach (var customer in customers)
+            {
+                if (!string.IsNullOrEmpty(customer.Adress))
+                {
+                    customer.Adress = StringCipher.Decrypt(customer.Adress, ConfigurationManager.AppSettings["EncryptPassword"]);
+                }
+            }
+
             return View("AllCustomers", customers);
         }
 

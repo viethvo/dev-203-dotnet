@@ -14,7 +14,7 @@
 	<fieldset>
 		<legend>Customer Detail</legend>
 
-		@Html.Hidden("provider", @Model.AccountId)
+		@Html.HiddenFor(model => model.AccountId, new { Value = Model.AccountId})
 
 		<div class="editor-label">
 			@Html.LabelFor(model => model.Id)
