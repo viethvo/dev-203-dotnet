@@ -38,20 +38,24 @@
         *@
         
         <dt>Phone Number:</dt>
-        <dd>
-            @(Model.PhoneNumber ?? "None") [
-            @if (Model.PhoneNumber != null)
-            {
-                @Html.ActionLink("Change", "AddPhoneNumber")
-                @: &nbsp;|&nbsp;
-                @Html.ActionLink("Remove", "RemovePhoneNumber")
-            }
-            else
-            {
-                @Html.ActionLink("Add", "AddPhoneNumber")
-            }
-            ]
-        </dd>
+		<dd>
+			@(Model.PhoneNumber ?? "None") [
+			@if (Model.PhoneNumber != null)
+			{
+				@Html.ActionLink("Change", "AddPhoneNumber")
+				@: &nbsp;|&nbsp;
+				using (Html.BeginForm("RemovePhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+				{
+					@Html.AntiForgeryToken()
+					<input type="submit" value="Remove" class="btn-link" />
+				}
+			}
+			else
+			{
+				@Html.ActionLink("Add", "AddPhoneNumber")
+			}
+			]
+		</dd>
         
         <dt>Two-Factor Authentication:</dt>
         <dd>
