@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using EncryptString;
+using Microsoft.AspNet.Identity;
 using SecurityCoding.Models;
 using SecurityCoding.Repository;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -57,6 +59,7 @@ namespace SecurityCoding.Controllers
             var repository = new CustomerRepository();
             customer.Image = saveFileName;
             customer.AccountId = User.Identity.GetUserId();
+            customer.Adress = !string.IsNullOrEmpty(customer.Adress) ? StringCipher.Encrypt(customer.Adress, ConfigurationManager.AppSettings["EncryptPassword"]) : string.Empty;
 
             var result = repository.Add(customer);
             TempData["CreateStatus"] = result != null ? "Create completed" : "Create failed";
@@ -68,6 +71,7 @@ namespace SecurityCoding.Controllers
         {
             var repository = new CustomerRepository();
             var customer = repository.FindById(id, User.Identity.GetUserId());
+            customer.Adress = !(string.IsNullOrEmpty(customer.Adress)) ? StringCipher.Decrypt(customer.Adress, ConfigurationManager.AppSettings["EncryptPassword"]) : string.Empty;
             return View("Edit", customer);
         }
 
@@ -77,6 +81,7 @@ namespace SecurityCoding.Controllers
         public ActionResult Edit(Customer customer)
         {
             var repository = new CustomerRepository();
+            customer.Adress = !string.IsNullOrEmpty(customer.Adress) ? StringCipher.Encrypt(customer.Adress, ConfigurationManager.AppSettings["EncryptPassword"]) : string.Empty;
             var result = repository.Update(customer, User.Identity.GetUserId());
             TempData["EditStatus"] = result != null ? "Save completed" : "Save failed";
             return View("Edit", customer);
