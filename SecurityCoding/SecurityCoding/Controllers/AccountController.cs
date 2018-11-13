@@ -79,7 +79,7 @@ namespace SecurityCoding.Controllers
             switch (result)
             {
                 case SignInStatus.Success:
-                    return Redirect(returnUrl);
+                    return RedirectToLocal(returnUrl);
                 case SignInStatus.LockedOut:
                     return View("Lockout");
                 case SignInStatus.RequiresVerification:
